@@ -1,14 +1,9 @@
 package com.searchhouse.searchhouse.repositories;
 
-import com.searchhouse.searchhouse.entities.Logement;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
+import com.searchhouse.searchhouse.entities.Agent;
 
 @Repository
-    public interface LogementRepository extends JpaRepository<Logement, Long> {
-
-
-
-    }
+public interface AgentRepository extends JpaRepository<Agent, Long> {
+}

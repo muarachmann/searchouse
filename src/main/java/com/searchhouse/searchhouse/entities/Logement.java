@@ -21,24 +21,35 @@ public class Logement {
     @NotNull
     private String longitude;
 
+
+    @NotNull
+    private String prix;
+
+    @NotNull
+    private String piece;
+
+    @NotNull
+    private String ville;
+
+    @NotNull
+    private String quartier;
+
+    @NotNull
+    private String photo;
+
     public Logement(){
         super();
     }
 
-    public Logement(Long id, String type, String latitude, String longitude) {
-        super();
-        this.id = id;
+    public Logement(@NotNull String type, @NotNull String latitude, @NotNull String longitude, @NotNull String prix, @NotNull String piece, @NotNull String ville, @NotNull String quartier, @NotNull String photo) {
         this.type = type;
         this.latitude = latitude;
         this.longitude = longitude;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+        this.prix = prix;
+        this.piece = piece;
+        this.ville = ville;
+        this.quartier = quartier;
+        this.photo = photo;
     }
 
     public String getType() {
@@ -63,5 +74,45 @@ public class Logement {
 
     public void setLongitude(String longitude) {
         this.longitude = longitude;
+    }
+
+    public String getPrix() {
+        return prix;
+    }
+
+    public void setPrix(String prix) {
+        this.prix = prix;
+    }
+
+    public String getPiece() {
+        return piece;
+    }
+
+    public void setPiece(String piece) {
+        this.piece = piece;
+    }
+
+    public String getVille() {
+        return ville;
+    }
+
+    public void setVille(String ville) {
+        this.ville = ville;
+    }
+
+    public String getQuartier() {
+        return quartier;
+    }
+
+    public void setQuartier(String quartier) {
+        this.quartier = quartier;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 }
