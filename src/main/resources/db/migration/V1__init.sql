@@ -8,7 +8,6 @@ CREATE TABLE logement (
   prix varchar (50) NOT NULL,
   piece varchar (50) NOT NULL,
   photo varchar (50) NOT NULL,
-
   PRIMARY KEY (id)
 )
 
@@ -18,17 +17,16 @@ CREATE TABLE logement (
 ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE agent (
-  idAgent bigint(20) NOT NULL AUTO_INCREMENT,
+  id bigint(20) NOT NULL AUTO_INCREMENT,
   nom varchar(100) NOT NULL,
   prenom varchar(50) NOT NULL,
   userName varchar(50) NOT NULL,
   ville varchar (50) NOT NULL,
   psswd varchar (50) NOT NULL,
+  mail varchar (50) NOT NULL,
   societe varchar (50) NOT NULL,
   telephone varchar (50) NOT NULL,
-
-
-  PRIMARY KEY (idAgent)
+  PRIMARY KEY (id)
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*
