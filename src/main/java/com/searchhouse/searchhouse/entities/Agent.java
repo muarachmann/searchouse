@@ -1,8 +1,6 @@
 package com.searchhouse.searchhouse.entities;
 
 
-import org.springframework.data.annotation.Id;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -12,13 +10,13 @@ public class Agent {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long IdAgent;
+    private Long id;
 
     @NotNull
     public String nom;
 
     @NotNull
-    public String userName;
+    public String username;
 
     @NotNull
     public String psswd;
@@ -40,9 +38,9 @@ public class Agent {
         super();
     }
 
-    public Agent(@NotNull String nom, @NotNull String userName, @NotNull String psswd, @NotNull String prenom, @NotNull String mail, @NotNull String telephone, @NotNull String societe) {
+    public Agent(@NotNull String nom, @NotNull String username, @NotNull String psswd, @NotNull String prenom, @NotNull String mail, @NotNull String telephone, @NotNull String societe) {
         this.nom = nom;
-        this.userName = userName;
+        this.username = username;
         this.psswd = psswd;
         this.prenom = prenom;
         this.mail = mail;
@@ -59,11 +57,11 @@ public class Agent {
     }
 
     public String getUserName() {
-        return userName;
+        return username;
     }
 
     public void setUserName(String userName) {
-        this.userName = userName;
+        this.username = userName;
     }
 
     public String getPsswd() {
