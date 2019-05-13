@@ -1,5 +1,7 @@
 package com.searchhouse.searchhouse.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -8,12 +10,23 @@ import javax.validation.constraints.NotNull;
 
 public class Logement {
 
+
+    @ManyToOne()
+    @JoinColumn(name = "ida", referencedColumnName = "id", nullable = false , insertable = false , updatable = false)
+    @JsonIgnore
+    private Agent agent;
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
     private String type;
+
+
+    @NotNull
+    private Long ida;
 
     @NotNull
     private String latitude;
@@ -41,7 +54,7 @@ public class Logement {
         super();
     }
 
-    public Logement(@NotNull String type, @NotNull String latitude, @NotNull String longitude, @NotNull String prix, @NotNull String piece, @NotNull String ville, @NotNull String quartier, @NotNull String photo) {
+    public Logement(@NotNull String type, @NotNull String latitude, @NotNull String longitude, @NotNull String prix, @NotNull String piece, @NotNull String ville, @NotNull String quartier, @NotNull String photo,@NotNull Long ida) {
         this.type = type;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -50,6 +63,7 @@ public class Logement {
         this.ville = ville;
         this.quartier = quartier;
         this.photo = photo;
+        this.ida=ida;
     }
 
     public String getType() {
@@ -114,5 +128,21 @@ public class Logement {
 
     public void setPhoto(String photo) {
         this.photo = photo;
+    }
+
+    public Agent getAgent() {
+        return agent;
+    }
+
+    public void setAgent(Agent agent) {
+        this.agent = agent;
+  }
+
+    public Long getIda() {
+        return ida;
+    }
+
+    public void setIda(Long ida) {
+        this.ida = ida;
     }
 }
