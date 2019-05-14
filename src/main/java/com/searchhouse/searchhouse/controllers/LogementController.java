@@ -8,7 +8,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class LogementController {
@@ -73,6 +76,13 @@ public class LogementController {
         return logementRepository.findById(Id)
                 .orElseThrow(() -> new ResourceNotFoundException("Logement","id",Id));
 
+    }
+
+    @GetMapping("/seachouse")
+
+    public List<Logement> searchLogementByMotCle(@Valid @RequestParam String q){
+        List<Logement> logement = logementRepository.findLogementByVill(q);
+        return logement;
     }
 
 }
