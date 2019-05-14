@@ -1,6 +1,7 @@
 package com.searchhouse.searchhouse.controllers;
 
 import com.searchhouse.searchhouse.entities.Logement;
+import com.searchhouse.searchhouse.entities.LogementSearch;
 import com.searchhouse.searchhouse.exception.ResourceNotFoundException;
 import com.searchhouse.searchhouse.repositories.LogementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,9 +81,27 @@ public class LogementController {
 
     @GetMapping("/seachouse")
 
-    public List<Logement> searchLogementByMotCle(@Valid @RequestParam String q){
+    public List<LogementSearch> searchLogementByMotCle(@Valid @RequestParam String q){
         List<Logement> logement = logementRepository.findLogementByVill(q);
-        return logement;
+        List<LogementSearch> logementSearches = new ArrayList<>();
+
+        for (Logement logementsearch: logement) {
+            logementSearches.add(new LogementSearch(
+                    logementsearch.getId(),
+                    logementsearch.getType(),
+                    logementsearch.getLatitude(),
+                    logementsearch.getLongitude(),
+                    logementsearch.getPrix(),
+                    logementsearch.getPiece(),
+                    logementsearch.getVille(),
+                    logementsearch.getQuartier(),
+                    logementsearch.getPhoto(),
+                    logementsearch.getIda(),
+                    logementsearch.getAgent().nom,
+                    logementsearch.getAgent().mail
+            ));
+        }
+        return logementSearches;
     }
 
 }
