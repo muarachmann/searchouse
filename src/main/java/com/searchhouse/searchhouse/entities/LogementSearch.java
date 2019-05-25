@@ -5,59 +5,42 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-@Entity
-@Table(name = "logement")
+public class LogementSearch {
 
-public class Logement {
-
-
-    @ManyToOne()
-    @JoinColumn(name = "ida", referencedColumnName = "id", nullable = false , insertable = false , updatable = false)
-    @JsonIgnore
-    private Agent agent;
-
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String agentname;
+    private String agenttelephone;
+    private String agentsociete;
+    private String agentemail;
     private Long id;
-
-    @NotNull
     private String type;
-
-
-    @NotNull
     private Long ida;
-
-    @NotNull
     private String latitude;
-
-    @NotNull
     private String longitude;
-
-
-    @NotNull
     private Double prix;
-
-    @NotNull
     private String piece;
-
-    @NotNull
     private String ville;
-
-    @NotNull
     private String quartier;
-
-    @NotNull
     private String photo;
 
-    @NotNull
-    private Boolean statut;
-
-    public Logement(){
+    public LogementSearch(){
         super();
     }
 
-    public Logement(@NotNull String type, @NotNull String latitude, @NotNull String longitude, @NotNull Double prix, @NotNull String piece, @NotNull String ville, @NotNull String quartier, @NotNull String photo,@NotNull Long ida,@NotNull Boolean statut) {
+    public LogementSearch(
+            Long id,
+            String type,
+            String latitude,
+            String longitude,
+            Double prix,
+            String piece,
+            String ville,
+            String quartier,
+            String photo,
+            Long ida,
+            String agentname,
+            String agentemail,
+            String agenttelephone,
+            String agentsociete) {
         this.type = type;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -66,8 +49,12 @@ public class Logement {
         this.ville = ville;
         this.quartier = quartier;
         this.photo = photo;
-        this.ida=ida;
-        this.statut=statut;
+        this.ida = ida;
+        this.agentname = agentname;
+        this.agentemail = agentemail;
+        this.agenttelephone=agenttelephone;
+        this.agentsociete=agentsociete;
+
     }
 
     public String getType() {
@@ -79,7 +66,7 @@ public class Logement {
     }
 
     public String getLatitude() {
-        return  latitude;
+        return latitude;
     }
 
     public void setLatitude(String latitude) {
@@ -134,14 +121,6 @@ public class Logement {
         this.photo = photo;
     }
 
-    public Agent getAgent() {
-        return agent;
-    }
-
-    public void setAgent(Agent agent) {
-        this.agent = agent;
-  }
-
     public Long getIda() {
         return ida;
     }
@@ -150,19 +129,44 @@ public class Logement {
         this.ida = ida;
     }
 
+    public String getAgentname() {
+        return agentname;
+    }
+
+    public void setAgentname(String agentname) {
+        this.agentname = agentname;
+    }
+
+    public String getAgentemail() {
+        return agentemail;
+    }
+
+    public void setAgentemail(String agentemail) {
+        this.agentemail = agentemail;
+    }
+
+
+    public String getAgenttelephone() {
+        return agenttelephone;
+    }
+
+    public void setAgenttelephone(String agenttelephone) {
+        this.agenttelephone = agenttelephone;
+    }
+
+    public String getAgentsociete() {
+        return agentsociete;
+    }
+
+    public void setAgentsociete(String agentsociete) {
+        this.agentsociete = agentsociete;
+    }
+
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Boolean getStatut() {
-        return statut;
-    }
-
-    public void setStatut(Boolean statut) {
-        this.statut = statut;
     }
 }
