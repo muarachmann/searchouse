@@ -79,10 +79,10 @@ public class LogementController {
 
     }
 
-    @GetMapping("/seachouse")
+    @GetMapping("/searchouse")
 
     public List<LogementSearch> searchLogementByMotCle(@Valid @RequestParam String q){
-        List<Logement> logement = logementRepository.findLogementByVill(q);
+        List<Logement> logement = logementRepository.findLogementByVille(q);
         List<LogementSearch> logementSearches = new ArrayList<>();
 
         for (Logement logementsearch: logement) {
@@ -91,17 +91,75 @@ public class LogementController {
                     logementsearch.getType(),
                     logementsearch.getLatitude(),
                     logementsearch.getLongitude(),
-                    logementsearch.getPrix(),
+                     logementsearch.getPrix(),
                     logementsearch.getPiece(),
                     logementsearch.getVille(),
                     logementsearch.getQuartier(),
                     logementsearch.getPhoto(),
                     logementsearch.getIda(),
                     logementsearch.getAgent().nom,
-                    logementsearch.getAgent().mail
+                    logementsearch.getAgent().mail,
+                    logementsearch.getAgent().telephone,
+                    logementsearch.getAgent().societe
             ));
         }
         return logementSearches;
     }
+
+
+    @GetMapping("/searchouse/resultat")
+
+    public List<LogementSearch> searchLogementByMot(@Valid @RequestParam String mot_cle){
+        List<Logement> logement = logementRepository.findLogementsByCarectiristique(mot_cle);
+        List<LogementSearch> logementSearch = new ArrayList<>();
+
+        for (Logement logement1: logement) {
+            logementSearch.add(new LogementSearch(
+                    logement1.getId(),
+                    logement1.getType(),
+                    logement1.getLatitude(),
+                    logement1.getLongitude(),
+                    logement1.getPrix(),
+                    logement1.getPiece(),
+                    logement1.getVille(),
+                    logement1.getQuartier(),
+                    logement1.getPhoto(),
+                    logement1.getIda(),
+                    logement1.getAgent().nom,
+                    logement1.getAgent().mail,
+                    logement1.getAgent().telephone,
+                    logement1.getAgent().societe
+            ));
+        }
+        return logementSearch;
+    }
+
+ @GetMapping("/searchouse/rechercheavance")
+
+    public List<LogementSearch> searchLogementAvance(@Valid @RequestParam String type,String ville,String quartier,String piece,Double prix1 ,Double prix2){
+
+     List<Logement> logement = logementRepository.rechercheavance(type,ville,quartier,piece,prix1,prix2 );
+     List<LogementSearch> logementSearch = new ArrayList<>();
+
+     for (Logement logement1: logement) {
+         logementSearch.add(new LogementSearch(
+                 logement1.getId(),
+                 logement1.getType(),
+                 logement1.getLatitude(),
+                 logement1.getLongitude(),
+                 logement1.getPrix(),
+                 logement1.getPiece(),
+                 logement1.getVille(),
+                 logement1.getQuartier(),
+                 logement1.getPhoto(),
+                 logement1.getIda(),
+                 logement1.getAgent().nom,
+                 logement1.getAgent().mail,
+                 logement1.getAgent().telephone,
+                 logement1.getAgent().societe
+         ));
+     }
+     return logementSearch;
+ }
 
 }

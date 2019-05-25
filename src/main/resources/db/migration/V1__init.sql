@@ -20,19 +20,27 @@ CREATE TABLE logement (
   longitude varchar(50) NOT NULL,
   ville varchar (50) NOT NULL,
   quartier varchar (50) NOT NULL,
-  prix varchar (50) NOT NULL,
+  prix double  NOT NULL,
   piece varchar (50) NOT NULL,
   photo varchar (50) NOT NULL,
   ida bigint(20) NOT NULL ,
+  statut tinyint (1) DEFAULT '0' NOT NULL ,
   PRIMARY KEY (id),
   FOREIGN KEY (ida) REFERENCES agent(id)
 )
-
-
-
-
 ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE table user (
+identifiant bigint(20) NOT null AUTO_INCREMENT,
+username varchar (50) NOT null ,
+password varchar (50) NOT null ,
+nom varchar (50) NOT NULL ,
+prenom varchar (50) NOT NULL ,
+email varchar (50) NOT NULL ,
+telephone varchar (50) NOT NULL ,
+primary key (identifiant)
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*
 insert into logement

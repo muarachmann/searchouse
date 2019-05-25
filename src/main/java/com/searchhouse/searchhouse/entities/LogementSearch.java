@@ -8,13 +8,15 @@ import javax.validation.constraints.NotNull;
 public class LogementSearch {
 
     private String agentname;
+    private String agenttelephone;
+    private String agentsociete;
     private String agentemail;
     private Long id;
     private String type;
     private Long ida;
     private String latitude;
     private String longitude;
-    private String prix;
+    private Double prix;
     private String piece;
     private String ville;
     private String quartier;
@@ -29,14 +31,16 @@ public class LogementSearch {
             String type,
             String latitude,
             String longitude,
-            String prix,
+            Double prix,
             String piece,
             String ville,
             String quartier,
             String photo,
             Long ida,
             String agentname,
-            String agentemail) {
+            String agentemail,
+            String agenttelephone,
+            String agentsociete) {
         this.type = type;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -48,6 +52,9 @@ public class LogementSearch {
         this.ida = ida;
         this.agentname = agentname;
         this.agentemail = agentemail;
+        this.agenttelephone=agenttelephone;
+        this.agentsociete=agentsociete;
+
     }
 
     public String getType() {
@@ -74,11 +81,11 @@ public class LogementSearch {
         this.longitude = longitude;
     }
 
-    public String getPrix() {
+    public Double getPrix() {
         return prix;
     }
 
-    public void setPrix(String prix) {
+    public void setPrix(Double prix) {
         this.prix = prix;
     }
 
@@ -136,6 +143,23 @@ public class LogementSearch {
 
     public void setAgentemail(String agentemail) {
         this.agentemail = agentemail;
+    }
+
+
+    public String getAgenttelephone() {
+        return agenttelephone;
+    }
+
+    public void setAgenttelephone(String agenttelephone) {
+        this.agenttelephone = agenttelephone;
+    }
+
+    public String getAgentsociete() {
+        return agentsociete;
+    }
+
+    public void setAgentsociete(String agentsociete) {
+        this.agentsociete = agentsociete;
     }
 
     public Long getId() {

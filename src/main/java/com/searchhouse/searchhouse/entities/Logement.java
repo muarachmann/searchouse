@@ -36,7 +36,7 @@ public class Logement {
 
 
     @NotNull
-    private String prix;
+    private Double prix;
 
     @NotNull
     private String piece;
@@ -50,11 +50,14 @@ public class Logement {
     @NotNull
     private String photo;
 
+    @NotNull
+    private Boolean statut;
+
     public Logement(){
         super();
     }
 
-    public Logement(@NotNull String type, @NotNull String latitude, @NotNull String longitude, @NotNull String prix, @NotNull String piece, @NotNull String ville, @NotNull String quartier, @NotNull String photo,@NotNull Long ida) {
+    public Logement(@NotNull String type, @NotNull String latitude, @NotNull String longitude, @NotNull Double prix, @NotNull String piece, @NotNull String ville, @NotNull String quartier, @NotNull String photo,@NotNull Long ida,@NotNull Boolean statut) {
         this.type = type;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -64,6 +67,7 @@ public class Logement {
         this.quartier = quartier;
         this.photo = photo;
         this.ida=ida;
+        this.statut=statut;
     }
 
     public String getType() {
@@ -90,11 +94,11 @@ public class Logement {
         this.longitude = longitude;
     }
 
-    public String getPrix() {
+    public Double getPrix() {
         return prix;
     }
 
-    public void setPrix(String prix) {
+    public void setPrix(Double prix) {
         this.prix = prix;
     }
 
@@ -152,5 +156,13 @@ public class Logement {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Boolean getStatut() {
+        return statut;
+    }
+
+    public void setStatut(Boolean statut) {
+        this.statut = statut;
     }
 }
