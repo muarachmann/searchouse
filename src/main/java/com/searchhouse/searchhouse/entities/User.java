@@ -4,6 +4,7 @@ package com.searchhouse.searchhouse.entities;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 
@@ -15,22 +16,26 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotNull
     private Long identifiant;
-
+    @NotEmpty
     @NotNull
     private String username;
 
+    @NotEmpty
     @NotNull
     private String password;
-
+    @NotEmpty
     @NotNull
     private String nom;
 
+    @NotEmpty
     @NotNull
     private String prenom;
 
+    @NotEmpty
     @NotNull
     private String email;
 
+    @NotEmpty
     @NotNull
     private String telephone;
 
@@ -102,4 +107,6 @@ public class User {
     public void setTelephone(String telephone) {
         this.telephone = telephone;
     }
+
+
 }

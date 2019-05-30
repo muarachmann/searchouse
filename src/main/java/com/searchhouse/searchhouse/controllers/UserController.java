@@ -1,6 +1,7 @@
 package com.searchhouse.searchhouse.controllers;
 
 
+
 import com.searchhouse.searchhouse.entities.User;
 import com.searchhouse.searchhouse.exception.ResourceNotFoundException;
 import com.searchhouse.searchhouse.exception.RessourcesNotFoundException;
