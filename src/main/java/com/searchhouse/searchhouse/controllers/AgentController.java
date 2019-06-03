@@ -43,18 +43,23 @@ public class AgentController {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
-    @RequestMapping("/welcome")
+    @RequestMapping("/searchouse/welcome")
     public ModelAndView firstPage() {
         return new ModelAndView("welcome");
     }
 
-    @RequestMapping(value = "/register",method = RequestMethod.GET)
+    @RequestMapping(value = "/searchouse/register",method = RequestMethod.GET)
     public ModelAndView register(){
 
         return new ModelAndView("registration","user", new UserRegistration());
     }
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
+
+   @RequestMapping(value = "/searchouse/inscription", method = RequestMethod.POST)
     public ModelAndView processRegister(@ModelAttribute("user") UserRegistration userRegistrationObject) {
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
         authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
@@ -63,7 +68,7 @@ public class AgentController {
 
         User user = new User(userRegistrationObject.getUsername(), encodedPassword, authorities);
         jdbcUserDetailsManager.createUser(user);
-        return new ModelAndView("redirect:/welcome");
+        return new ModelAndView("redirect:/searchouse/welcome");
     }
 
 
@@ -120,14 +125,14 @@ public class AgentController {
     }
 
 
-    @PostMapping("/searchouse/connexion")
+    @PostMapping("/searchouse/agent/connexion")
 
     public Agent connexion(@Valid @RequestParam String name,String psswd){
         return agentRepository.connexionAgent(name, psswd);
     }
 
     // Delete a Agent
-    @DeleteMapping("/user/{id}")
+    @DeleteMapping("/agent/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable(value = "id") Long Id) {
         Agent agent = agentRepository.findById(Id)
                 .orElseThrow(() -> new ResourceNotFoundException("Agent", "id", Id));
