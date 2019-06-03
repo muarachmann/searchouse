@@ -2,14 +2,11 @@ package com.searchhouse.searchhouse.controllers;
 
 
 import com.searchhouse.searchhouse.model.UserRegistration;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,15 +17,11 @@ import com.searchhouse.searchhouse.entities.Logement;
 import com.searchhouse.searchhouse.exception.ResourceNotFoundException;
 import com.searchhouse.searchhouse.exception.RessourcesNotFoundException;
 import com.searchhouse.searchhouse.repositories.AgentRepository;
-import com.searchhouse.searchhouse.repositories.LogementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Null;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +33,7 @@ public class AgentController {
 
     @Autowired
     private AgentRepository agentRepository;
+
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -120,15 +114,14 @@ public class AgentController {
     }
 
 
-    @PostMapping("/searchouse/connexion")
-
-    public Agent connexion(@Valid @RequestParam String name,String psswd){
+    @PostMapping("/searchouse/agent/connexion")
+    public Agent connexionAgent(@Valid @RequestParam String name,String psswd){
         return agentRepository.connexionAgent(name, psswd);
     }
 
     // Delete a Agent
-    @DeleteMapping("/user/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable(value = "id") Long Id) {
+    @DeleteMapping("/agent/{id}")
+    public ResponseEntity<?> deleteAgent(@PathVariable(value = "id") Long Id) {
         Agent agent = agentRepository.findById(Id)
                 .orElseThrow(() -> new ResourceNotFoundException("Agent", "id", Id));
 

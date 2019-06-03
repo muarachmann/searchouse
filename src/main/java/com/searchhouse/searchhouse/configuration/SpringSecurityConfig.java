@@ -25,8 +25,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
 
-
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -48,14 +51,12 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-
     public void configure(WebSecurity web) throws Exception{
         web.ignoring().antMatchers("/resources/**");
 
     }
 
     @Override
-
     protected void configure(HttpSecurity http)
         throws Exception {
         http.authorizeRequests().antMatchers("/register").permitAll().antMatchers("/welcome")
@@ -65,11 +66,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.csrf().disable();
     }
-
-
-
-
-
 
     // @Autowired
     // public void configureGlobal(AuthenticationManagerBuilder authenticationMgr)
