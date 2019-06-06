@@ -31,14 +31,14 @@ CREATE TABLE logement (
 ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE table user (
-identifiant bigint(20) NOT null AUTO_INCREMENT,
-username varchar (50) NOT null ,
-password varchar (50) NOT null ,
-nom varchar (50) NOT NULL ,
-prenom varchar (50) NOT NULL ,
-email varchar (50) NOT NULL ,
-telephone varchar (50) NOT NULL ,
-primary key (identifiant)
+  identifiant bigint(20) NOT null AUTO_INCREMENT,
+  username varchar (50) NOT null ,
+  password varchar (50) NOT null ,
+  nom varchar (50) NOT NULL ,
+  prenom varchar (50) NOT NULL ,
+  email varchar (50) NOT NULL ,
+  telephone varchar (50) NOT NULL ,
+  primary key (identifiant)
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
