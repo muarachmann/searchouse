@@ -38,7 +38,7 @@ public class UserController {
         }
     }
 
-    @PostMapping("/searchouse/connexion")
+    @PostMapping("/searchouse/user/connexion")
 
     public User connexion(@Valid @RequestParam String name, String psswd){
         return userRepository.connexionUser(name, psswd);
@@ -66,7 +66,7 @@ public class UserController {
     }
 
 
-    // Delete a User
+   /* // Delete a User
     @DeleteMapping("/user/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable(value = "id") Long Id) {
         User user = userRepository.findById(Id)
@@ -76,5 +76,5 @@ public class UserController {
 
         return ResponseEntity.ok().build();
     }
-
+*/
 }

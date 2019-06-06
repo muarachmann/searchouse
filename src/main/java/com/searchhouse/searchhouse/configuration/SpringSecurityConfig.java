@@ -51,12 +51,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    public void configure(WebSecurity web) throws Exception{
-        web.ignoring().antMatchers("/resources/**");
-
-    }
-
-    @Override
     protected void configure(HttpSecurity http)
         throws Exception {
         http.authorizeRequests().antMatchers("/register").permitAll().antMatchers("/welcome")
