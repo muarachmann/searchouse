@@ -25,6 +25,10 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     DataSource dataSource;
 
+   @Bean
+    public LayoutDialect layoutDialect() {
+        return new LayoutDialect();
+    }
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
@@ -76,9 +80,13 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
     }
 
-    @Bean
-    public LayoutDialect layoutDialect() {
-        return new LayoutDialect();
-    }
+    // @Autowired
+    // public void configureGlobal(AuthenticationManagerBuilder authenticationMgr)
+    // throws Exception {
+    // authenticationMgr.inMemoryAuthentication().withUser("admin").password("admin").authorities("ROLE_USER").and()
+    // .withUser("javainuse").password("javainuse").authorities("ROLE_USER",
+    // "ROLE_ADMIN");
+    // }
+
 
 }

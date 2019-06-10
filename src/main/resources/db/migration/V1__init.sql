@@ -31,7 +31,7 @@ CREATE TABLE logement (
 ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE table user (
-identifiant bigint(11) NOT null AUTO_INCREMENT,
+ identifiant bigint(11) NOT null AUTO_INCREMENT,
 username varchar (255) NOT null ,
 password varchar (255) NOT null ,
 nom varchar (255) NOT NULL ,

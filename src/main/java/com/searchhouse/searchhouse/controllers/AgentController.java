@@ -80,14 +80,13 @@ public class AgentController {
 
 
     @PostMapping("/searchouse/agent/connexion")
-
-    public Agent connexion(@Valid @RequestParam String name,String psswd){
+    public Agent connexionAgent(@Valid @RequestParam String name, String psswd){
         return agentRepository.connexionAgent(name, psswd);
     }
 
     // Delete a Agent
     @DeleteMapping("/agent/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable(value = "id") Long Id) {
+    public ResponseEntity<?> deleteAgent(@PathVariable(value = "id") Long Id) {
         Agent agent = agentRepository.findById(Id)
                 .orElseThrow(() -> new ResourceNotFoundException("Agent", "id", Id));
 
