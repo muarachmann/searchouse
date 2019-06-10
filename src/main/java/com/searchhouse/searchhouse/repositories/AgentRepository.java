@@ -16,8 +16,12 @@ public interface AgentRepository extends JpaRepository<Agent, Long> {
 
 
     @Query(value ="Select * from agent where userName=?1" , nativeQuery=true)
-
     Agent creationAgent(String username);
 
+    @Query(value ="Select * from agent where userName=?1" , nativeQuery=true)
+    Agent getAgentByUserName(String username);
+
+    @Query(value ="INSERT into agent where userName=?1" , nativeQuery=true)
+    Agent insert(String username);
 
 }

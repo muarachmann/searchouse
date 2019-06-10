@@ -37,40 +37,9 @@ public class AgentController {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @RequestMapping("/searchouse/welcome")
-    public ModelAndView firstPage() {
-        return new ModelAndView("welcome");
-    }
-
-    @RequestMapping(value = "/searchouse/register",method = RequestMethod.GET)
-    public ModelAndView register(){
-
-        return new ModelAndView("registration","user", new UserRegistration());
-    }
-
-   @RequestMapping(value = "/searchouse/inscription", method = RequestMethod.POST)
-    public ModelAndView processRegister(@ModelAttribute("user") UserRegistration userRegistrationObject) {
-        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-        authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-
-        String encodedPassword = bCryptPasswordEncoder.encode(userRegistrationObject.getPassword());
-
-        User user = new User(userRegistrationObject.getUsername(), encodedPassword, authorities);
-        jdbcUserDetailsManager.createUser(user);
-        return new ModelAndView("redirect:/searchouse/welcome");
-    }
-
-
-        // Create a new Agent
-
+    // Create a new Agent
     @PostMapping("/searchouse/agent")
     public Agent createAgent(@Valid @RequestBody Agent agent) {
-
         Agent agent2 = agentRepository.creationAgent(agent.getUserName());
         if (agent2 == null) {
             return agentRepository.save(agent);}
@@ -79,18 +48,12 @@ public class AgentController {
             }
         }
 
-
-
-    //Update logement
-
+    // Update logement
     @PutMapping("/searchouse/agent/{id}")
-
     public  Agent updateAgent(@PathVariable(value="id") Long Id,
                                     @Valid @RequestBody Agent agentDetails){
-
         Agent agent = agentRepository.findById(Id)
                 .orElseThrow(() -> new ResourceNotFoundException("Agent","id", Id));
-
         agent.setNom(agentDetails.getNom());
         agent.setPrenom(agentDetails.getPrenom());
         agent.setMail(agentDetails.getMail());
@@ -99,12 +62,9 @@ public class AgentController {
         agent.setTelephone(agentDetails.getTelephone());
         agent.setUserName(agentDetails.getUserName());
         agent.setVille(agentDetails.getVille());
-
         Agent updateAgent =agentRepository.save(agent);
-
         return updateAgent;
     }
-
 
     @GetMapping("/searchouse/agent/{id}")
     public Agent getAgentById(@PathVariable(value = "id") Long Id) {
