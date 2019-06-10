@@ -1,5 +1,6 @@
 package com.searchhouse.searchhouse.configuration;
 
+import nz.net.ultraq.thymeleaf.LayoutDialect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
 import javax.sql.DataSource;
 
@@ -23,6 +25,10 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     DataSource dataSource;
 
+   @Bean
+    public LayoutDialect layoutDialect() {
+        return new LayoutDialect();
+    }
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
@@ -53,10 +59,23 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http)
         throws Exception {
-        http.authorizeRequests().antMatchers("/register").permitAll().antMatchers("/welcome")
-                .hasAnyRole("USER", "ADMIN").antMatchers("/getEmployees").hasAnyRole("USER", "ADMIN")
-                .antMatchers("/addNewEmployee").hasAnyRole("ADMIN").anyRequest().authenticated().and().formLogin()
-                .loginPage("/login").permitAll().and().logout().permitAll();
+        http
+                .authorizeRequests()
+                    .antMatchers("/", "/register", "/about", "/contact", "/logement", "/login/useragent").permitAll()
+                    .antMatchers("/favicon.ico").permitAll()
+                    .antMatchers("/css/**").permitAll()
+                    .antMatchers("/js/**").permitAll()
+                    .antMatchers("/static/**").permitAll()
+                    .antMatchers("/images/**").permitAll()
+                    .antMatchers("/blog/**").permitAll()
+                    .anyRequest().authenticated()
+                .and()
+                .formLogin()
+                    .loginPage("/")
+                    .permitAll()
+                .and()
+                .logout()
+                    .permitAll();
 
         http.csrf().disable();
     }
@@ -68,5 +87,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     // .withUser("javainuse").password("javainuse").authorities("ROLE_USER",
     // "ROLE_ADMIN");
     // }
+
 
 }
