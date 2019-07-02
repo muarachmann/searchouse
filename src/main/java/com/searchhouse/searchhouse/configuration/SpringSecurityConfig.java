@@ -80,6 +80,25 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
     }
 
+   // @Override
+    protected void globalconfigure(HttpSecurity http)
+        throws Exception{
+        http
+                .authorizeRequests()
+                    .antMatchers("/logement").hasRole("AGENT")
+                    .and()
+                    .formLogin()
+                    .loginPage("/")
+                    .permitAll()
+                    .and()
+                    .logout()
+                        .permitAll();
+
+        http.csrf().disable();
+
+
+    }
+
     // @Autowired
     // public void configureGlobal(AuthenticationManagerBuilder authenticationMgr)
     // throws Exception {

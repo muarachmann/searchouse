@@ -39,17 +39,25 @@ public class User {
     @NotNull
     private String telephone;
 
+    @Column(name = "enabled")
+    private boolean enabled;
+
+    @Column(name = "confirmation_token")
+    private String confirmationToken;
+
 
     public User() {
     }
 
-    public User(@NotNull String username, @NotNull String password, @NotNull String nom, @NotNull String prenom, @NotNull String email, @NotNull String telephone) {
+    public User(@NotNull String username, @NotNull String password, @NotNull String nom, @NotNull String prenom, @NotNull String email, @NotNull String telephone, @NotNull boolean enabled,@NotNull String confirmationToken) {
         this.username = username;
         this.password = password;
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
         this.telephone = telephone;
+        this.enabled = enabled;
+        this.confirmationToken = confirmationToken;
     }
 
     public Long getIdentifiant() {
@@ -108,5 +116,19 @@ public class User {
         this.telephone = telephone;
     }
 
+    public boolean isEnabled() {
+        return enabled;
+    }
 
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public String getConfirmationToken() {
+        return confirmationToken;
+    }
+
+    public void setConfirmationToken(String confirmationToken) {
+        this.confirmationToken = confirmationToken;
+    }
 }

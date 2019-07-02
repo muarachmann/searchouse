@@ -3,9 +3,9 @@ CREATE TABLE agent (
   nom varchar(255) NOT NULL,
   prenom varchar(255) NOT NULL,
   userName varchar(255) NOT NULL,
+  psswd varchar(255) NOT NULL,
+  mail varchar(255) NOT NULL,
   ville varchar (255) NOT NULL,
-  psswd varchar (255) NOT NULL,
-  mail varchar (255) NOT NULL,
   societe varchar (255) NOT NULL,
   telephone varchar (255) NOT NULL,
   PRIMARY KEY (id)
@@ -38,6 +38,8 @@ nom varchar (255) NOT NULL ,
 prenom varchar (255) NOT NULL ,
 email varchar (255) NOT NULL ,
 telephone varchar (255) NOT NULL ,
+confirmation_token varchar (255) NOT NULL ,
+enabled tinyint (1) DEFAULT '0' NOT NULL ,
 primary key (identifiant)
 )
 ENGINE=InnoDB DEFAULT CHARSET=utf8;
