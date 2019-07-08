@@ -7,14 +7,17 @@ import com.searchhouse.searchhouse.db.LogementRepository;
 import com.searchhouse.searchhouse.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import sun.management.resources.agent;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
-@RestController
+@Controller
 public class AgentController {
 
     @Autowired
@@ -26,6 +29,14 @@ public class AgentController {
     // ******************************************************************* //
     //                 AGENTS ROUTE GOES HERE                             //
     // ****************************************************************** //
+
+    @GetMapping("/agent/profile")
+    public String getAgentProfile(Model model, Principal principal) {
+        if(principal != null){
+            model.addAttribute("agent",  principal.getName());
+        }
+        return "agent/index";
+    }
 
 //    @GetMapping("/agent/{agent_id}")
 //    public ModelAndView getAgentDashboard(@PathVariable(value = "agent_id") String username) {
