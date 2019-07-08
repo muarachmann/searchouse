@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{fragments/main_layout}"
+      xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Login</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <!-- Breadcrumb Wrapper start -->
+    <div class="rle_pagetitle_wrapper rle_toppadder40 rle_bottompadder40">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="page_title">
+                        <h2>Login</h2>
+                    </div>
+                    <ul class="breadcrumb">
+                        <li><a href="/"><i class="fa fa-home" aria-hidden="true"></i> Acceuil</a></li>
+                        <li><i class="fa fa-angle-right" aria-hidden="true"></i></li>
+                        <li><a href="#">Login</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Item Details Wrapper start -->
+    <div class="rle_itemdetails_wrapper style_2 rle_toppadder100 rle_bottompadder40">
+        <div class="container text-center">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="rle_contact_form">
+                        <div class="row">
+                            <div th:if="${param.error}" th:remove="tag" class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="alert alert-danger">
+                                        <strong>Error!</strong> [[${param.error}]]
+                                    </div>
+                                </div>
+                            <div th:if="${param.logout}" th:remove="tag" class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="alert alert-danger">
+                                    <strong>Hmm!</strong> You have been logged out
+                                </div>
+                            </div>
+                            <p class="clearfix"></p>
+                            <div id="userRegistrationForm">
+                                <form method="post" th:action="@{/login}" name="loginForm">
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <input type="text" name="username" id="username" placeholder="Username*" required max="35">
+                                    </div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <input type="password" name="password" id="password" placeholder="Password*">
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <input type="submit"class="rle_btn" value="Login"/>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="rle_itemdetails_info">
+                        <img src="images/content/item_detail2.jpg" alt="Item" title="Home" class="img-responsive">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+</body>
+</html>

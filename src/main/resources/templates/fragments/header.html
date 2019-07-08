@@ -1,11 +1,11 @@
 <header th:fragment="header" xmlns:th="http://www.w3.org/1999/xhtml">
-    <div class="rle_banner_wrapper">
-        <div class="rle_header_wrapper">
+    <div th:classappend="${#httpServletRequest.getRequestURI() == '/' ? 'rle_banner_wrapper' : 'rle_banner_wrapper style_4'}">
+        <div th:classappend="${#httpServletRequest.getRequestURI() == '/' ? 'rle_header_wrapper' : 'rle_header_wrapper style_4'}">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                         <div class="rle_logo">
-                            <a href="/"><img src="images/icon/logo.png" alt="Logo" title="Logo"></a>
+                            <a th:href="@{/}"><img src="images/icon/logo.png" alt="Logo" title="Logo"></a>
                         </div>
                     </div>
                     <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
@@ -13,34 +13,29 @@
                         <div class="rle_main_menu_wrapper">
                             <div class="rle_main_menu">
                                 <ul>
-                                    <li><a href="Accueil">Acceuil</a></li>
-                                    <li><a href="recherche">Recherche Simple</a></li>
-                                    <li><a href="logement">Logements</a></li>
-                                    <li><a href="about">A propos</a></li>
-                                    <li><a href="contact">Contact</a></li>
+                                    <li><a th:href="@{/}">Acceuil</a></li>
+                                    <li><a th:href="@{/logements}">Logements</a></li>
+                                    <li><a th:href="@{/agents}">Nos Agents</a></li>
+                                    <li><a th:href="@{/about}">A propos</a></li>
+                                    <!--<li th:if="${#httpServletRequest.requestURI} == '/'"><a href="#">We home</a></li>-->
+                                    <li><a th:href="@{/contact}">Contact</a></li>
                                     <li th:if="${agent}"><a href="#"><span th:inline="text">[[${agent.username}]]</span></a></li>
                                 </ul>
                             </div>
                         </div>
                         <div class="rle_signin">
-                            <a href="#" class="rle_btn" id="login_button">sign in</a>
+                            <a th:href="@{/login}" class="rle_btn" id="login_button">sign in</a>
                             <div id="login_one" class="rle_login_form">
-                                <p>Don’t have an account? <a href="register">Sign up</a></p>
-                                <form class="form" action="/login/useragent" method="post">
-                                    <input type="text" placeholder="Username" name="username" required>
-                                    <input type="password" placeholder="Password" name="password" required>
-                                    <div class="rle_checkbox">
-                                        <input type="radio" id="user_login" name="user_type" value="user" checked>
-                                        <label for="user_login">User</label>&nbsp;&nbsp;
-                                        <input type="radio" id="agent_login" name="user_type" value="agent">
-                                        <label for="agent_login">Agent</label>
-                                    </div>
+                                <p>Don’t have an account? <a th:href="@{/register}">Sign up</a></p>
+                                <form class="form" th:action="@{/login}" name="loginForm" method="post">
+                                    <input type="text" placeholder="Username" name="username" id="username" required>
+                                    <input type="password" placeholder="Password" name="password" id="password" required>
                                     <p class="clearfix"></p>
                                     <div class="rle_checkbox">
                                         <input type="checkbox" id="remember_me" checked>
                                         <label for="remember_me">Remember me</label>
                                     </div>
-                                    <a href="" class="forgot_pswd">forgot password?</a>
+                                    <a th:href="@{/forgot/password}" class="forgot_pswd">forgot password?</a>
                                     <button type="submit" class="rle_btn">sign in</button>
                                     <span>or</span>
                                     <a href="#" class="share_btn fcbk_clr_1"><i class="fa fa-facebook" aria-hidden="true"></i>login with facebook</a>
@@ -52,15 +47,17 @@
                 </div>
             </div>
         </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="rle_banner_text">
-                        <h1>luxury properties <span>for sale</span></h1>
-                        <p>Exclusive luxury residential specialists</p>
+            <div th:if="${#httpServletRequest.requestURI} == '/'" th:remove="tag">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="rle_banner_text">
+                                <h1>luxury properties <span>for sale</span></h1>
+                                <p>Exclusive luxury residential specialists</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
     </div>
 </header>
