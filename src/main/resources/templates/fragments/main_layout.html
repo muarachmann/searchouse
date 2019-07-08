@@ -17,12 +17,20 @@
     <link rel="stylesheet" type="text/css" href="css/owl.theme.default.css"/>
     <link rel="stylesheet" type="text/css" href="css/jquery-ui.css"/>
     <link rel="stylesheet" type="text/css" href="css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="css/custom.css"/>
     <!-- favicon links -->
     <link rel="shortcut icon" type="image/png" href="images/header/favicon.png" />
 </head>
 <body>
 
 <!--header.html  that's here  -->
+<!-- homepage has a special header that is unique from the other pages -->
+
+<!--<div th:with="ishomepage=${#httpServletRequest.requestURI} == '/'" th:remove="tag">-->
+    <!--<div th:if="${ishomepage}" th:replace="fragments/header :: header"></div>-->
+    <!--<div th:unless="${ishomepage}" th:replace="fragments/header_two :: header_two"></div>-->
+<!--</div>-->
+
 <div th:replace="fragments/header :: header"></div>
 
 
@@ -39,6 +47,7 @@
 <script type="text/javascript" src="js/owl.carousel.js"></script>
 <script type="text/javascript" src="js/jquery-ui.js"></script>
 <script type="text/javascript" src="js/custom.js"></script>
+<script type="text/javascript" src="js/custom2.js"></script>
 <!--main js file end-->
 
 </body>

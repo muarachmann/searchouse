@@ -1,46 +1,66 @@
-package com.searchhouse.searchhouse.entities;
+package com.searchhouse.searchhouse.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-public class LogementSearch {
+@Entity
+@Table(name = "logements")
 
-    private String agentname;
-    private String agenttelephone;
-    private String agentsociete;
-    private String agentemail;
+public class Logement {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
+
+    @NotNull
+    @Column(name = "type")
     private String type;
-    private Long ida;
+
+    @NotNull
+    @Column(name = "latitude")
     private String latitude;
+
+    @NotNull
+    @Column(name = "longitude")
     private String longitude;
+
+    @NotNull
+    @Column(name = "prix")
     private Double prix;
+
+    @NotNull
+    @Column(name = "piece")
     private String piece;
+
+    @NotNull
+    @Column(name = "ville")
     private String ville;
+
+    @NotNull
+    @Column(name = "quartier")
     private String quartier;
+
+    @NotNull
+    @Column(name = "photo")
     private String photo;
 
-    public LogementSearch(){
+    @NotNull
+    @Column(name = "status")
+    private Boolean status;
+
+    @ManyToOne()
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false , insertable = false , updatable = false)
+    @JsonIgnore
+    private User user;
+
+    public Logement(){
         super();
     }
 
-    public LogementSearch(
-            Long id,
-            String type,
-            String latitude,
-            String longitude,
-            Double prix,
-            String piece,
-            String ville,
-            String quartier,
-            String photo,
-            Long ida,
-            String agentname,
-            String agentemail,
-            String agenttelephone,
-            String agentsociete) {
+    public Logement(@NotNull String type, @NotNull String latitude, @NotNull String longitude, @NotNull Double prix, @NotNull String piece, @NotNull String ville, @NotNull String quartier, @NotNull String photo, @NotNull Boolean status) {
         this.type = type;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -49,12 +69,7 @@ public class LogementSearch {
         this.ville = ville;
         this.quartier = quartier;
         this.photo = photo;
-        this.ida = ida;
-        this.agentname = agentname;
-        this.agentemail = agentemail;
-        this.agenttelephone=agenttelephone;
-        this.agentsociete=agentsociete;
-
+        this.status = status;
     }
 
     public String getType() {
@@ -66,7 +81,7 @@ public class LogementSearch {
     }
 
     public String getLatitude() {
-        return latitude;
+        return  latitude;
     }
 
     public void setLatitude(String latitude) {
@@ -121,46 +136,13 @@ public class LogementSearch {
         this.photo = photo;
     }
 
-    public Long getIda() {
-        return ida;
+    public User getUser() {
+        return user;
     }
 
-    public void setIda(Long ida) {
-        this.ida = ida;
-    }
-
-    public String getAgentname() {
-        return agentname;
-    }
-
-    public void setAgentname(String agentname) {
-        this.agentname = agentname;
-    }
-
-    public String getAgentemail() {
-        return agentemail;
-    }
-
-    public void setAgentemail(String agentemail) {
-        this.agentemail = agentemail;
-    }
-
-
-    public String getAgenttelephone() {
-        return agenttelephone;
-    }
-
-    public void setAgenttelephone(String agenttelephone) {
-        this.agenttelephone = agenttelephone;
-    }
-
-    public String getAgentsociete() {
-        return agentsociete;
-    }
-
-    public void setAgentsociete(String agentsociete) {
-        this.agentsociete = agentsociete;
-    }
+    public void setUser(User user) {
+        this.user = user;
+  }
 
     public Long getId() {
         return id;
@@ -168,5 +150,13 @@ public class LogementSearch {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 }

@@ -1,1 +1,20 @@
 /* Your custom css code goes here */
+
+/* vertical tabs for user and and login */
+
+.toggle_btn_user {
+    border-radius: 0;
+    background:#ffffff;
+    text-align:center;
+    font-size: 16px;
+    border:1px solid #424242;
+    color:#222222;
+    height:50px;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.toggle_btn_user.active {
+    background:#00aeef;
+    color:#fff;
+}

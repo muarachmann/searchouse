@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{fragments/main_layout}"
+      xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>Confirm Account</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+
+    <!-- Breadcrumb Wrapper start -->
+    <div class="rle_pagetitle_wrapper rle_toppadder40 rle_bottompadder40">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="page_title">
+                        <h2>Confirm Account</h2>
+                    </div>
+                    <ul class="breadcrumb">
+                        <li><a th:href="@{/}"><i class="fa fa-home" aria-hidden="true"></i> Acceuil</a></li>
+                        <li><a href="#">Confirm Searchhouse Account</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Item Details Wrapper start -->
+    <div class="rle_itemdetails_wrapper style_2 rle_toppadder100 rle_bottompadder40">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="jumbotron">
+                        <h3 class="rle_bottompadder30">Confirm your account for searchhouse.</h3>
+                        <div th:if="${error}" th:remove="tag" class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="alert alert-danger">
+                                <strong>Error!</strong> [[${error}]]
+                            </div>
+                            <a th:href="@{/register}" class="toggle_btn_user active">REGISTER</a>
+                        </div>
+                        <div th:if="${user}" th:remove="tag" class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="alert alert-success">
+                                <strong>Success!</strong> Thanks for activating your account with email [[${user.email}]]. You can now login and enjoy the awesome features of searchhouse
+                            </div>
+                            <a th:href="@{/}" class="toggle_btn_user active">LOGIN</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+</body>
+</html>
