@@ -19,7 +19,7 @@
                                     <li><a th:href="@{/about}">A propos</a></li>
                                     <!--<li th:if="${#httpServletRequest.requestURI} == '/'"><a href="#">We home</a></li>-->
                                     <li><a th:href="@{/contact}">Contact</a></li>
-                                    <li th:if="${agent}"><a href="#"><span th:inline="text">[[${agent.username}]]</span></a></li>
+                                    <li th:if="${agent}"><a href="#"><span th:inline="text">[[${agent}]]</span></a></li>
                                 </ul>
                             </div>
                         </div>
