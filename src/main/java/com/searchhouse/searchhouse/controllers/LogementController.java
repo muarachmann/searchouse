@@ -18,7 +18,7 @@ public class LogementController {
     private LogementRepository logementRepository;
 
 
-    @GetMapping("/logements")
+    @GetMapping("/logement")
     public List<Logement> getAllLogements() {
         return logementRepository.findAll();
     }

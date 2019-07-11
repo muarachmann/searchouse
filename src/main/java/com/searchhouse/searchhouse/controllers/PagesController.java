@@ -1,10 +1,13 @@
 package com.searchhouse.searchhouse.controllers;
 
 import com.searchhouse.searchhouse.UserPrincipal;
+import com.searchhouse.searchhouse.db.LogementRepository;
 import com.searchhouse.searchhouse.model.AgentDetails;
+import com.searchhouse.searchhouse.model.Logement;
 import com.searchhouse.searchhouse.model.User;
 
 import com.searchhouse.searchhouse.service.UserService;
+import com.searchhouse.searchhouse.utils.SendEmails;
 import com.searchhouse.searchhouse.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,9 +24,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 
 
-@Controller
+@Controller("/pageController")
 public class PagesController {
 
     @Autowired
@@ -32,12 +37,15 @@ public class PagesController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private LogementRepository logementRepository;
+
     @GetMapping("/")
-    public String getHomePage(Model model, Principal principal) {
-        if(principal != null){
-            model.addAttribute("agent",  principal.getName());
-        }
+    public String getHomePage(Model model) {
+        List<Logement> logements= logementRepository.findAll();
+            model.addAttribute("logements", logements);
         return "index";
+
     }
 
     @GetMapping("/about")
@@ -54,6 +62,7 @@ public class PagesController {
     public String getLoginPage() {
         return "login";
     }
+
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public String register(Model model, String error, String success){
@@ -78,6 +87,7 @@ public class PagesController {
     }
 
 
+
     @PostMapping("/register")
     public String registerUser(
             @Valid
@@ -91,6 +101,7 @@ public class PagesController {
         boolean userExistsByEmail = userService.findByEmailAndUsernameAndTelephone(email);
         boolean userExistsByUsername = userService.findByEmailAndUsernameAndTelephone(username);
         boolean userExistsByTelephone = userService.findByEmailAndUsernameAndTelephone(telephone);
+        String token=Utils.generatetoken();
 
         if(userExistsByEmail || userExistsByTelephone || userExistsByUsername){
             String errorMessage = "";
@@ -109,16 +120,16 @@ public class PagesController {
             if(user_type.equalsIgnoreCase("agent")){
                 AgentDetails agentDetails = new AgentDetails(ville, societe, "",apropos);
 
-                user = new User(username, nom, prenom, email, telephone, this.passwordEncoder.encode(password), "", true, Utils.generatetoken(), "AGENT", "");
+                user = new User(username, nom, prenom, email, telephone, this.passwordEncoder.encode(password), "", true, token, "AGENT", "");
                 user.setAgentDetails(agentDetails);     // Set child reference(agentDetails) in parent entity(user)
                 agentDetails.setUser(user);             // Set parent reference(user) in child entity(agentDetails)
             } else {
-                user = new User(username, nom, prenom, email, telephone, this.passwordEncoder.encode(password), "", true, Utils.generatetoken(), "USER", "");
+                user = new User(username, nom, prenom, email, telephone, this.passwordEncoder.encode(password), "", true, token, "USER", "");
             }
             userService.createNewUser(user);
             redirectAttributes.addFlashAttribute("success", "Your " + user_type +  " account is successfully setup! We sent an email to "+ email +". Please make sure to activate your account before.");
-            // SendEmails sendEmails = new SendEmails();
-            // sendEmails.sendMailtoUsers(request, newuser, newuser.confirmation_token);
+             SendEmails sendEmails = new SendEmails();
+             sendEmails.sendMailtoUsers(request, user, token);
             return "redirect:/register";
         }
     }
@@ -134,6 +145,39 @@ public class PagesController {
         modelAndView.setViewName("confirm");
         return modelAndView;
     }
+
+    @RequestMapping(value = "/logement", method = RequestMethod.GET)
+    public String rechercheSimple(Model model,
+                                  @RequestParam
+                                          String motcle,String ville,String piece,String quartier,String type,Double prix1,Double prix2,RedirectAttributes redirectAttributes,
+                                  int choix_recherche) {
+
+
+        if (choix_recherche==1){
+            if (ville ==null|piece == null|quartier == null|type == null |prix1 == null |prix2 == null) {
+                String errorMessage = "";
+                errorMessage = "Vous avez oublié un paramètre de recherche.";
+                redirectAttributes.addFlashAttribute("error", errorMessage);
+                return "redirect:/index";
+            }else {
+                List<Logement> listLogement = logementRepository.rechercheavance(type, ville, quartier, piece, prix1, prix2);
+                model.addAttribute("listLogement", listLogement);
+                return "logement";
+            }
+        }else{
+            if(motcle==null){
+                String errorMessage = "";
+                errorMessage = "Veuillez entrer un paramètre de recherche.";
+                redirectAttributes.addFlashAttribute("error", errorMessage);
+                return "redirect:/index";}
+            else{
+                List<Logement> listLogement =logementRepository.findLogementsByCarectiristique(motcle);
+                model.addAttribute("listLogement",listLogement);
+                return "/";
+            }
+        }
+    }
+
 
     // ACTIVATE AGENT HERE
 

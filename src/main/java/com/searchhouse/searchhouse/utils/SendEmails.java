@@ -10,8 +10,8 @@ import java.util.Properties;
 
 public class SendEmails {
 
-    private String username = "test@gmail.com";
-    private String password = "password";
+    private String username = "pguesssle@gmail.com";
+    private String password = "mzfnpiawoeqcdnct";
     private Properties properties;
 
     private User user;

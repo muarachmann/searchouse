@@ -14,7 +14,7 @@
                             <div class="rle_main_menu">
                                 <ul>
                                     <li><a th:href="@{/}">Acceuil</a></li>
-                                    <li><a th:href="@{/logements}">Logements</a></li>
+                                    <li><a th:href="@{/logement}">Logements</a></li>
                                     <li><a th:href="@{/agents}">Nos Agents</a></li>
                                     <li><a th:href="@{/about}">A propos</a></li>
                                     <!--<li th:if="${#httpServletRequest.requestURI} == '/'"><a href="#">We home</a></li>-->
@@ -24,7 +24,7 @@
                             </div>
                         </div>
                         <div class="rle_signin">
-                            <a th:href="@{/login}" class="rle_btn" id="login_button">sign in</a>
+                            <a th:href="@{/login}" class="rle_btn">sign in</a>
                             <div id="login_one" class="rle_login_form">
                                 <p>Don’t have an account? <a th:href="@{/register}">Sign up</a></p>
                                 <form class="form" th:action="@{/login}" name="loginForm" method="post">
