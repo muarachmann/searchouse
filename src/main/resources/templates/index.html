@@ -74,7 +74,11 @@
                                             <p>search</p>
                                         </div>
                                     </div>
-
+                                            <div th:if="${error}" th:remove="tag" class="col-md-12 col-sm-12 col-xs-12">
+                                                <div class="alert alert-danger">
+                                                    <strong>Error!</strong> [[${error}]]
+                                                </div>
+                                            </div>
                                 </div>
                             </div>
                         </div>
