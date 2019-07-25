@@ -63,6 +63,10 @@ public class PagesController {
         return "login";
     }
 
+    @GetMapping("/logement")
+    public String getLogementPage() {
+        return "logement";
+    }
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public String register(Model model, String error, String success){
@@ -146,43 +150,46 @@ public class PagesController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/logement", method = RequestMethod.GET)
-    public String rechercheSimple(Model model,
+   @RequestMapping(value = "/index", method = RequestMethod.GET)
+    public String rechercheSimple(Model model, String error,
                                   @RequestParam
-                                          String motcle,String ville,String piece,String quartier,String type,Double prix1,Double prix2,RedirectAttributes redirectAttributes,
-                                  int choix_recherche) {
+                                          String motcle,RedirectAttributes redirectAttributes) {
 
 
-        if (choix_recherche==1){
-            if (ville ==null|piece == null|quartier == null|type == null |prix1 == null |prix2 == null) {
-                String errorMessage = "";
-                errorMessage = "Vous avez oublié un paramètre de recherche.";
-                redirectAttributes.addFlashAttribute("error", errorMessage);
-                return "redirect:/index";
-            }else {
-                List<Logement> listLogement = logementRepository.rechercheavance(type, ville, quartier, piece, prix1, prix2);
-                model.addAttribute("listLogement", listLogement);
-                return "logement";
-            }
-        }else{
-            if(motcle==null){
-                String errorMessage = "";
-                errorMessage = "Veuillez entrer un paramètre de recherche.";
-                redirectAttributes.addFlashAttribute("error", errorMessage);
-                return "redirect:/index";}
-            else{
-                List<Logement> listLogement =logementRepository.findLogementsByCarectiristique(motcle);
-                model.addAttribute("listLogement",listLogement);
-                return "/";
-            }
+           if (motcle == null) {
+               String errorMessage = "";
+               errorMessage = "Veuillez entrer un paramètre de recherche.";
+              redirectAttributes.addFlashAttribute("error", errorMessage);
+               return "redirect:/index";
+           } else {
+               List<Logement> listLogement = logementRepository.findLogementsByCarectiristique(motcle);
+               model.addAttribute("listLogement", listLogement);
+               return "redirect:/logement";
+           }
+       }
+
+    @RequestMapping(value = "/logement", method = RequestMethod.GET)
+    public String rechercheAvance(Model model,
+                                  @RequestParam String type,String ville,String quartier,String piece,Double prix1 ,Double prix2 ,RedirectAttributes redirectAttributes) {
+
+
+        if (type == null|| ville == null || quartier == null || piece == null || prix1 == null || prix2 == null) {
+            String errorMessage = "";
+            errorMessage = "Veuillez remplir tos les champs.";
+            redirectAttributes.addFlashAttribute("error", errorMessage);
+            return "redirect:/index";
+        } else {
+            List<Logement> listLogement = logementRepository.rechercheavance(type,ville,quartier,piece,prix1,prix2);
+            model.addAttribute("listLogement", listLogement);
+            return "redirect:/logement";
         }
     }
-
+}
 
     // ACTIVATE AGENT HERE
 
 
-}
+
 
 
 

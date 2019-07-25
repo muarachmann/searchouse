@@ -15,77 +15,37 @@
                     <div class="rle_searchform_tabs">
                         <!-- Nav tabs -->
                         <ul class="nav nav-tabs" role="tablist">
-                            <li role="presentation" class="active"><a href="#buy" aria-controls="buy" role="tab" data-toggle="tab">Recherche Avancée</a></li>
-                            <li role="presentation"><a href="#rent" aria-controls="rent" role="tab" data-toggle="tab">Recherche Simple</a></li>
+                            <li role="presentation"><a href="#rent" aria-controls="rent" role="tab" data-toggle="tab">Recherche</a></li>
                         </ul>
                         <!-- Tab panes -->
-                        <form name="rechercheForm" method="get" th:action="@{/rechercheSimple}" enctype="multipart/form-data">
+
                         <div class="tab-content">
-                            <div role="tabpanel" class="tab-pane fade in active" id="buy">
-                                <div class="row">
-                                    <div class="col-lg-10 col-md-10 col-sm-9 col-xs-12">
-                                        <div class="rle_searchform_box">
-                                            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
-                                                <select name="type">
-                                                    <option>Type</option>
-                                                    <option value="1">Appartement</option>
-                                                    <option value="2">Cité universitaire</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
-                                                <input type="text" name ="ville" id="ville"placeholder="Saisissez le nom de la ville">
-                                            </div>
-                                            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
-                                                <input type="text" name="quartier" id="quartier" placeholder="Saisissez le nom du quartier">
-                                            </div>
-                                            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
-                                                <input type="text" name="piece" id="piece" placeholder="Saisissez le nom de pièce">
-                                            </div>
-                                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
-                                            </div>
-                                            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
-                                                <input type="text" name="prix1" id="prix-min" placeholder="Saisissez le prix minimale">
-                                            </div>
-                                            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
-                                                <input type="text" name="prix2" id="prix_max" placeholder="Saisissez le prix maximum">
-                                            </div>
-                                            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12" >${("#rechercheForm").append(<input type="hidden" name="choix_recherche" value="1">) }</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
-                                        <div class="rle_searchform_btn">
-                                            <img src="images/icon/search_icon.png">
-                                            <p>search</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div role="tabpanel" class="tab-pane fade" id="rent">
-                                <div class="row">
-                                    <div class="col-lg-10 col-md-10 col-sm-9 col-xs-12">
+
+                            <div role="tabpanel" class="tab-pane fade in active" id="rent">
+                                    <div class="row">
+                                        <form th:action="@{/rechercheSimple}" method="get" enctype="multipart/form-data">
+                                        <div class="col-lg-10 col-md-10 col-sm-9 col-xs-12">
                                         <div class="rle_searchform_box">
                                             <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
                                                 <input type="text" name="motcle" placeholder="Saisissez votre mot clé(ville,quartier, prix...)">
                                             </div>
-                                            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12"> ${("#rechercheForm").append(<input type="hidden" name="choix_recherche" value="2">) }</div>
                                     <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
-                                        <div class="rle_searchform_btn">
-                                            <img src="images/icon/search_icon.png">
-                                            <p>search</p>
+                                        <div class="col-lg-12">
+                                            <input type="submit" class="rle_btn" value="Search">
+                                        </div>
                                         </div>
                                     </div>
-                                            <div th:if="${error}" th:remove="tag" class="col-md-12 col-sm-12 col-xs-12">
-                                                <div class="alert alert-danger">
-                                                    <strong>Error!</strong> [[${error}]]
-                                                </div>
+                                            <div  class="col-md-12 col-sm-12 col-xs-12">
                                             </div>
                                 </div>
+                                        </form>
                             </div>
                         </div>
                     </div>
-                </div>
-                        </form>
-            </div>
+
+
+
+
         </div>
     </div>
         </div>
@@ -267,6 +227,7 @@
         </div>
     </div>
 
+</div>
 </div>
 </body>
 

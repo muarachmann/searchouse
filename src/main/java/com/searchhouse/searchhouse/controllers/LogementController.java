@@ -18,38 +18,15 @@ public class LogementController {
     private LogementRepository logementRepository;
 
 
-    @GetMapping("/logement")
     public List<Logement> getAllLogements() {
         return logementRepository.findAll();
     }
 
 
-    // TODO
 
-    @GetMapping("/searchouse")
 
-    public List<LogementSearch> searchLogementByMotCle(@Valid @RequestParam String q){
-        List<Logement> logement = logementRepository.findLogementByVille(q);
-        List<LogementSearch> logementSearches = new ArrayList<>();
 
-        for (Logement logementsearch: logement) {
-            logementSearches.add(new LogementSearch(
-                    logementsearch.getId(),
-                    logementsearch.getType(),
-                    logementsearch.getLatitude(),
-                    logementsearch.getLongitude(),
-                    logementsearch.getPrix(),
-                    logementsearch.getPiece(),
-                    logementsearch.getVille(),
-                    logementsearch.getQuartier(),
-                    logementsearch.getPhoto(),
-                    logementsearch.getUser()
-            ));
-        }
-        return logementSearches;
-    }
 
-    @GetMapping("/searchouse/resultat")
 
     public List<LogementSearch> searchLogementByMot(@Valid @RequestParam String mot_cle){
         List<Logement> logement = logementRepository.findLogementsByCarectiristique(mot_cle);
@@ -72,7 +49,7 @@ public class LogementController {
         return logementSearch;
     }
 
-    @GetMapping("/searchouse/rechercheavance")
+
 
     public List<LogementSearch> searchLogementAvance(@Valid @RequestParam String type,String ville,String quartier,String piece,Double prix1 ,Double prix2){
 
