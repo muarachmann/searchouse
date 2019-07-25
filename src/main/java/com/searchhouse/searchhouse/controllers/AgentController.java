@@ -1,147 +1,111 @@
 package com.searchhouse.searchhouse.controllers;
 
-
-import com.searchhouse.searchhouse.model.UserRegistration;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import com.searchhouse.searchhouse.db.UserRepository;
+import com.searchhouse.searchhouse.model.Logement;
+import com.searchhouse.searchhouse.exception.ResourceNotFoundException;
+import com.searchhouse.searchhouse.db.LogementRepository;
+import com.searchhouse.searchhouse.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
-
-import com.searchhouse.searchhouse.entities.Agent;
-import com.searchhouse.searchhouse.entities.Logement;
-import com.searchhouse.searchhouse.exception.ResourceNotFoundException;
-import com.searchhouse.searchhouse.exception.RessourcesNotFoundException;
-import com.searchhouse.searchhouse.repositories.AgentRepository;
-import com.searchhouse.searchhouse.repositories.LogementRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+import sun.management.resources.agent;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Null;
-import java.util.ArrayList;
+import java.security.Principal;
 import java.util.List;
 
-@RestController
+@Controller
 public class AgentController {
 
     @Autowired
-    private JdbcUserDetailsManager jdbcUserDetailsManager;
+    private UserRepository userRepository;
 
     @Autowired
-    private AgentRepository agentRepository;
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private LogementRepository logementRepository;
 
-    @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+    // ******************************************************************* //
+    //                 AGENTS ROUTE GOES HERE                             //
+    // ****************************************************************** //
 
-    @RequestMapping("/searchouse/welcome")
-    public ModelAndView firstPage() {
-        return new ModelAndView("welcome");
-    }
-
-    @RequestMapping(value = "/searchouse/register",method = RequestMethod.GET)
-    public ModelAndView register(){
-
-        return new ModelAndView("registration","user", new UserRegistration());
-    }
-
-   @RequestMapping(value = "/searchouse/inscription", method = RequestMethod.POST)
-    public ModelAndView processRegister(@ModelAttribute("user") UserRegistration userRegistrationObject) {
-        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-        authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-
-        String encodedPassword = bCryptPasswordEncoder.encode(userRegistrationObject.getPassword());
-
-        User user = new User(userRegistrationObject.getUsername(), encodedPassword, authorities);
-        jdbcUserDetailsManager.createUser(user);
-        return new ModelAndView("redirect:/searchouse/welcome");
-    }
-
-
-        // Create a new Agent
-
-    @PostMapping("/searchouse/agent")
-    public Agent createAgent(@Valid @RequestBody Agent agent) {
-
-        Agent agent2 = agentRepository.creationAgent(agent.getUserName());
-        if (agent2 == null) {
-            return agentRepository.save(agent);}
-            else{
-             throw new RessourcesNotFoundException("Cet username existe déjà");
-            }
+    @GetMapping("/agent/profile")
+    public String getAgentProfile(Model model, Principal principal) {
+        if(principal != null){
+            model.addAttribute("agent",  principal.getName());
         }
-
-
-
-    //Update logement
-
-    @PutMapping("/searchouse/agent/{id}")
-
-    public  Agent updateAgent(@PathVariable(value="id") Long Id,
-                                    @Valid @RequestBody Agent agentDetails){
-
-        Agent agent = agentRepository.findById(Id)
-                .orElseThrow(() -> new ResourceNotFoundException("Agent","id", Id));
-
-        agent.setNom(agentDetails.getNom());
-        agent.setPrenom(agentDetails.getPrenom());
-        agent.setMail(agentDetails.getMail());
-        agent.setSociete(agentDetails.getSociete());
-        agent.setPsswd(agentDetails.getPsswd());
-        agent.setTelephone(agentDetails.getTelephone());
-        agent.setUserName(agentDetails.getUserName());
-        agent.setVille(agentDetails.getVille());
-
-        Agent updateAgent =agentRepository.save(agent);
-
-        return updateAgent;
+        return "agent/index";
     }
 
+//    @GetMapping("/agent/{agent_id}")
+//    public ModelAndView getAgentDashboard(@PathVariable(value = "agent_id") String username) {
+//        Agent agent = agentRepository.findByEmailAndUsernameAndTelephone(username);
+//        if(agent == null){
+//            ModelAndView modelAndView = new ModelAndView();
+//            modelAndView.setViewName("index.html");
+//            return modelAndView;
+//        } else {
+//            ModelAndView modelAndView = new ModelAndView();
+//            modelAndView.setViewName("dashboard/agents/index.html");
+//            modelAndView.addObject("agent", agent);
+//            return modelAndView;
+//        }
+//    }
 
-    @GetMapping("/searchouse/agent/{id}")
-    public Agent getAgentById(@PathVariable(value = "id") Long Id) {
-        return agentRepository.findById(Id)
-                .orElseThrow(() -> new ResourceNotFoundException("Agent","id",Id));
+    // ******************************************************************* //
+    // ONLY AGENTS CAN CREATE/EDIT/UPDATE AND  CREATE THEIR LOGEMENTS HERE //
+    // ****************************************************************** //
+
+    // NB THIS IS PERFORMED BY AN AGENT ONLY
+
+    // AGENT CREATE LOGEMENT
+    @PostMapping("/agent/{agent_id}/logements/create")
+    public String createLogement(@Valid @RequestBody Logement logement, @PathVariable(value= "agent_id") String username){
+
+        logementRepository.save(logement);
+        return "agents";
     }
 
-    @GetMapping("/searchouse/agent/{id}/logements")
-    public List<Logement> retrieveAllLogement(@PathVariable(value = "id") Long Id) {
-        Agent agent = getAgentById(Id);
-        return agent.getLogements();
+    //AGENT DELETE A LOGEMENT
+    @DeleteMapping("/agent/{agent_id}/logements/{logement_id}")
+    public ResponseEntity<?> deleteLogement(@PathVariable(value = "id") Long Id){
+
+        Logement logement = logementRepository.findById(Id)
+                .orElseThrow(() -> new ResourceNotFoundException("Note", "id", Id));
+
+        logementRepository.delete(logement);
+        return  ResponseEntity.ok().build() ;
+
     }
 
+    //AGENT UPDATE INFO ABOUT LOGEMENT
+    @PutMapping("/agent/{agent_id}/logements/{logement_id}")
+    public  Logement updateLogement(@PathVariable(value="id") Long Id,
+                                    @Valid @RequestBody Logement logementDetails){
 
-    @PostMapping("/searchouse/agent/connexion")
+        Logement logement = logementRepository.findById(Id)
+                .orElseThrow(() -> new ResourceNotFoundException("Logement","id", Id));
+        logement.setType(logementDetails.getType());
+        logement.setLatitude(logementDetails.getLatitude());
+        logement.setLongitude(logementDetails.getLongitude());
+        logement.setPiece(logementDetails.getPiece());
+        logement.setPrix(logementDetails.getPrix());
+        logement.setVille(logementDetails.getVille());
+        logement.setQuartier(logementDetails.getQuartier());
+        logement.setPhoto(logementDetails.getPhoto());
 
-    public Agent connexion(@Valid @RequestParam String name,String psswd){
-        return agentRepository.connexionAgent(name, psswd);
+        Logement updateLogement =logementRepository.save(logement);
+
+        return updateLogement;
     }
 
-    // Delete a Agent
-    @DeleteMapping("/agent/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable(value = "id") Long Id) {
-        Agent agent = agentRepository.findById(Id)
-                .orElseThrow(() -> new ResourceNotFoundException("Agent", "id", Id));
-
-        agentRepository.delete(agent);
-
-        return ResponseEntity.ok().build();
+    //SHOW DETAILS OF LOGMENT TO AGENT
+    @GetMapping("/agent/{agent_id}/logements/{logement_id}")
+    public Logement getLogementById(@PathVariable(value ="id") Long Id){
+        return logementRepository.findById(Id)
+                .orElseThrow(() -> new ResourceNotFoundException("Logement","id",Id));
     }
-
 
 
 }

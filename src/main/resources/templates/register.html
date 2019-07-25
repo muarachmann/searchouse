@@ -1,0 +1,140 @@
+<!DOCTYPE HTML>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{fragments/main_layout}"
+      xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Register</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <!-- Breadcrumb Wrapper start -->
+    <div class="rle_pagetitle_wrapper rle_toppadder40 rle_bottompadder40">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="page_title">
+                        <h2>Register</h2>
+                    </div>
+                    <ul class="breadcrumb">
+                        <li><a href="/"><i class="fa fa-home" aria-hidden="true"></i> Acceuil</a></li>
+                        <li><i class="fa fa-angle-right" aria-hidden="true"></i></li>
+                        <li><a href="#">Register</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Item Details Wrapper start -->
+    <div class="rle_itemdetails_wrapper style_2 rle_toppadder100 rle_bottompadder40">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
+                    <div class="rle_contact_form">
+                        <div class="row">
+                                <div th:if="${error}" th:remove="tag" class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="alert alert-danger">
+                                        <strong>Error!</strong> [[${error}]]
+                                    </div>
+                                </div>
+                                <div th:if="${success}" th:remove="tag" class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="alert alert-success">
+                                        <strong>Success!</strong> [[${success}]].
+                                    </div>
+                                </div>
+                            <div class="col-md-6 col-sm-6 col-xs-6">
+                                <button type="button" id="toggleUserRegistration" class="toggle_btn_user active">USER</button>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-6">
+                                <button type="button" id="toggleAgentRegistration" class="toggle_btn_user">AGENT</button>
+                            </div>
+                            <p class="clearfix"></p>
+                            <div id="userRegistrationForm">
+                                <form method="post" th:action="@{/register}" enctype="multipart/form-data">
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <input type="text" name="username" id="user_username" placeholder="Username*" required max="35">
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input type="text" name="nom" id="user_nom" placeholder="Nom*" required>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input type="text" name="prenom" id="user_prenom" placeholder="Prenom*" required>
+                                    </div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <input type="email" name="email" id="user_email" placeholder="Email*" required>
+                                    </div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <input type="tel" name="telephone" id="user_telephone" placeholder="Telephone*" required>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input type="password" name="password" id="user_password" placeholder="Password*">
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input type="password" name="confirm_password" id="user_confirm_password" placeholder="Confirm Password*">
+                                    </div>
+                                    <div id="userTypeUser"><input type="hidden" id="normal_user_type" value="user" name="user_type"/></div>
+                                    <div class="col-lg-12">
+                                        <input type="submit"class="rle_btn" value="Register"/>
+                                    </div>
+                                </form>
+                            </div>
+                            <div id="agentRegistrationForm" class="hidden">
+                                <form th:action="@{/register}" method="post" enctype="multipart/form-data">
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <input type="text" name="username" id="agent_username" placeholder="Username*" required max="35">
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input type="text" name="nom" id="agent_nom" placeholder="Nom*" required>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input type="text" name="prenom" id="agent_prenom" placeholder="Prenom*" required>
+                                    </div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <input type="email" name="email" id="agent_email" placeholder="Email*" required>
+                                    </div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <input type="tel" name="telephone" id="agent_telephone" placeholder="Telephone*" required>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <select name="ville" id="agent_ville" required>
+                                            <option>Ville</option>
+                                            <option value="buea">Buea</option>
+                                            <option value="douala">Douala</option>
+                                            <option value="yaounde">Yaounde</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input type="text" name="societe" id="agent_societe" placeholder="Societe*" required>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <textarea rows="8" name="apropos" placeholder="A propos de vous (150)"></textarea>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input type="password" name="password" id="agent_password" placeholder="Password*">
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input type="password" name="confirm_password" id="agent_confirm_password" placeholder="Confirm Password*">
+                                    </div>
+                                    <div id="userTypeAgent"></div>
+                                    <div class="col-lg-12">
+                                        <input type="submit" class="rle_btn" value="Register">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                    <div class="rle_itemdetails_info">
+                        <img src="images/content/item_detail2.jpg" alt="Item" title="Home" class="img-responsive">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+</body>
+</html>

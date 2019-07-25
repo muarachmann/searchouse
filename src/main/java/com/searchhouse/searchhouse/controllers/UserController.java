@@ -2,13 +2,11 @@ package com.searchhouse.searchhouse.controllers;
 
 
 
-import com.searchhouse.searchhouse.entities.User;
+import com.searchhouse.searchhouse.model.User;
 import com.searchhouse.searchhouse.exception.ResourceNotFoundException;
 import com.searchhouse.searchhouse.exception.RessourcesNotFoundException;
-import com.searchhouse.searchhouse.repositories.UserRepository;
+import com.searchhouse.searchhouse.db.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -16,32 +14,23 @@ import javax.validation.Valid;
 @RestController
 public class UserController {
 
-
-
-
     @Autowired
     private UserRepository userRepository;
 
-
-
     // Create a new User
-
     @PostMapping("/searchouse/user")
     public User createUser(@Valid @RequestBody User user) {
-
-        User user2 = userRepository.creationUser(user.getUsername());
+        User user2 = userRepository.findByUsername(user.getUsername());
         if (user2 == null) {
             return userRepository.save(user);}
-
         else{
             throw new RessourcesNotFoundException("Cet username existe déjà");
         }
     }
 
     @PostMapping("/searchouse/user/connexion")
-
-    public User connexion(@Valid @RequestParam String name, String psswd){
-        return userRepository.connexionUser(name, psswd);
+    public User connexion(@Valid @RequestParam String name, String password){
+        return userRepository.connexionUser(name, password);
     }
 
 
@@ -60,7 +49,7 @@ public class UserController {
         user.setTelephone(userDetails.getTelephone());
         user.setUsername(userDetails.getUsername());
 
-        User updateUser =userRepository.save(user);
+        User updateUser = userRepository.save(user);
 
         return updateUser;
     }
